@@ -11,7 +11,7 @@ class EventDecorator < ApplicationDecorator
   end
 
   def _methods
-    methods = %I[place date time author]
+    methods = %I[place date time author people_attended_count people_attended invited]
   end
 
   def place
@@ -28,5 +28,17 @@ class EventDecorator < ApplicationDecorator
 
   def author
     User.find(author_id).decorate(context: { brief: true })
+  end
+
+  def people_attended_count
+    users.count
+  end
+
+  def invited
+    invites.map { |id| User.find(id).decorate(context: { brief: true }) }
+  end
+
+  def people_attended
+    users.decorate(context: { brief: true })
   end
 end

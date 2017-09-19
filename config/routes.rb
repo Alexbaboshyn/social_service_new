@@ -19,6 +19,10 @@ Rails.application.routes.draw do
 
     resource :session, only: [:create, :destroy]
 
-    resources :events, only: [:create, :index, :update, :destroy]
+    resources :events, only: [:create, :index, :update, :destroy] do
+      resource :attend, only: [:create]
+
+      resources :invite, only: [:destroy], controller: 'attends'
+    end
   end
 end

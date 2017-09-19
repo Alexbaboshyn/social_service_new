@@ -1,11 +1,10 @@
 class User < ApplicationRecord
   has_secure_password
+  has_and_belongs_to_many :events
 
   has_many :place_users, dependent: :destroy
 
   has_many :places, through: :place_users
-
-  has_and_belongs_to_many :events
 
   enum gender: [:male, :female]
 

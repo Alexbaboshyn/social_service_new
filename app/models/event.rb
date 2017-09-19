@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
-  belongs_to :place
-
   has_and_belongs_to_many :users
+
+  belongs_to :place
 
   enum kind: [:free, :by_invitation, :friends_only]
 
