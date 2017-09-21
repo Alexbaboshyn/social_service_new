@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_secure_password
   has_and_belongs_to_many :events
 
+  has_many :own_events, class_name: 'Event', foreign_key: 'author_id'
+
   has_many :place_users, dependent: :destroy
 
   has_many :places, through: :place_users
@@ -12,9 +14,7 @@ class User < ApplicationRecord
 
   has_attached_file :avatar, styles: { thumb: "300x300>" }
 
-  validates_attachment :avatar,
-                        content_type: { content_type: "image/jpeg" }
-
+  validates_attachment :avatar, content_type: { content_type: "image/jpeg" }
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
 
@@ -38,9 +38,5 @@ class User < ApplicationRecord
 
   def generate_auth_token
     self.auth_tokens.create
-  end
-
-  def own_events
-    Event.where(author_id: self.id)
   end
 end

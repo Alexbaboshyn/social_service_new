@@ -6,9 +6,9 @@ class Api::AttendsController < ApplicationController
   end
 
   def destroy
-    parent.users.delete(User.find(params[:id]))
+    event = current_user.own_events.find(params[:event_id])
+    event.users.delete(User.find(params[:id]))
   end
-
 
   private
   def parent
