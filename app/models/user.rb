@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_secure_password
   has_and_belongs_to_many :events
 
+  has_many :invites
+
   has_many :own_events, class_name: 'Event', foreign_key: 'author_id'
 
   has_many :place_users, dependent: :destroy

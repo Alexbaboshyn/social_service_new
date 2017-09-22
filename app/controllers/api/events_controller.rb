@@ -1,6 +1,6 @@
 class Api::EventsController < ApplicationController
   def build_resource
-    @event = Event.new resource_params.merge(author_id: current_user.id)
+    @event = Event.new(resource_params.merge(author_id: current_user.id))
   end
 
   def update
