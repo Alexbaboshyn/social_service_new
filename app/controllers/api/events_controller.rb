@@ -29,7 +29,7 @@ class Api::EventsController < ApplicationController
                                   :start_time,
                                   :date,
                                   :title,
-                                  invites: []
+                                  invites: []                                
                                   )
   end
 end

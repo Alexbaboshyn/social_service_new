@@ -35,7 +35,7 @@ class EventDecorator < ApplicationDecorator
   end
 
   def invited
-    invites.map { |id| User.find(id).decorate(context: { brief: true }) }
+    User.joins(:invites).where(invites:{ event_id: id}).decorate(context: { brief: true })
   end
 
   def people_attended
