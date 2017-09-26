@@ -1,5 +1,4 @@
 class PlaceSearcher
-
   attr_accessor :city, :range, :tags, :current_user
 
   def initialize params
@@ -15,8 +14,12 @@ class PlaceSearcher
   end
 
   def search
-    places = @range.present? ? Place.within_radius(@range, @current_user.lat, @current_user.lng).all : Place.all
-    # places = Place.find_by_sql("SELECT * FROM places WHERE earth_box(ll_to_earth("@current_user"."lat", "@current_user"."lng"), 1000) @> ll_to_earth(lat, lng)", )
+    places = Place.all
+
+    if @range.present?
+      places = Place.where('earth_box(ll_to_earth(?, ?), ?) @> ll_to_earth(places.lat, places.lng)', @current_user.lat, @current_user.lng, @range)
+    end
+
     places = places.where(city: @city.capitalize) if @city.present?
 
     places = places.where("'#{ @tags }' = ANY (tags)") if @tags.present?

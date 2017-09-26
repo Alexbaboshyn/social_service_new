@@ -1,35 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe PlaceSearcher do
-  let(:user) { stub_model User }
+  let(:current_user) { stub_model User, lat: 40.58, lng: 29.10 }
 
-  let(:place_searcher) { PlaceSearcher.new city: 'City', tags: 'pub', range: 10 }
+  let(:params) { { city: 'city', tags: 'pub', range: 10, current_user: current_user } }
+
+  let(:place_searcher) { PlaceSearcher.new params }
 
   subject { place_searcher }
 
-  its(:city) { should eq 'City' }
+  its(:city) { should eq 'city' }
 
   its(:tags) { should eq 'pub' }
 
   its(:range) { should eq 10 }
 
-  # its(:current_user) { should eq user }
+  
+  describe '#search' do
+    let(:places) { stub_model Place }
 
-  # describe '#search' do
-  #   let(:places) { double }
-  #
-  #   before { expect(Place).to receive(:within_radius).with(place_searcher.range, user.lat, user.lng).and_return(places) }
-  #
-  #     #
-  #   # context do
-  #   #
-  #   #   before { expect(places).to receive(:where).with(city: place_searcher.city) }
-  #   #
-  #     it { expect { subject.send(:search).with(range: 10) }.to_not raise_error }
-  #   # end
-  #
-  #  
-  # end
+    before { expect(subject.city).to receive(:capitalize).and_return('City') }
 
-
+    before do
+      expect(Place).to receive(:where).with('earth_box(ll_to_earth(?, ?), ?) @> ll_to_earth(places.lat, places.lng)', current_user.lat, current_user.lng, 10) do
+        double.tap do |a|
+          expect(a).to receive(:where).with(city: 'City') do
+            double.tap { |b| expect(b).to receive(:where).with("'#{ subject.tags }' = ANY (tags)").and_return(places) }
+          end
+        end
+      end
+    end
+    its(:search) { should eq places }
+  end
 end

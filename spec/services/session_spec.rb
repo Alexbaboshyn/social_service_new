@@ -49,7 +49,7 @@ RSpec.describe Session do
 
       before { session.valid? }
 
-      xit { expect { subject }.to_not raise_error }
+      it { expect { subject }.to_not raise_error }
     end
   end
 

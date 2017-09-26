@@ -112,7 +112,7 @@ RSpec.describe UserDecorator do
 
     before { expect(subject).to receive(:lng).and_return(user.lng) }
 
-    xit(:coords) { should eq ({lat: 48.1, lng: 29.2}) }
+    its(:coords) { should eq ({lat: 48.1, lng: 29.2}) }
   end
 
 

@@ -73,6 +73,4 @@ RSpec.describe PlaceDecorator do
 
     its(:coords) { should eq ({lat: 48.1, lng: 29.2}) }
   end
-
-
 end

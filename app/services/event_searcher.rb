@@ -1,6 +1,5 @@
 class EventSearcher
-
-  attr_accessor :city, :range, :tags, :current_user
+  attr_accessor :start_date, :end_date, :range, :user
 
   def initialize params
     params = params.symbolize_keys || {}
@@ -18,11 +17,11 @@ class EventSearcher
     events = Event.all
 
     if @range.present?
-      events = Place.within_radius(@range, @user.lat, @user.lng).all.map { |place| place.events }
+      events = Event.joins(:place).where('earth_box(ll_to_earth(?, ?), ?) @> ll_to_earth(places.lat, places.lng)', @user.lat, @user.lng, @range)
     end
 
     if @start_date.present?
-      events = Event.where(:start_time => @start_date..@end_date)
+      events = events.where(:start_time => @start_date..@end_date)
     end
     events
   end
