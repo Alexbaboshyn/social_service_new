@@ -23,19 +23,10 @@ class User < ApplicationRecord
   after_create :generate_auth_token
 
   acts_as_geolocated lat: 'lat', lng: 'lng'
+  
 
-
-  def distance_to_place(lat, lon)
-    rad_per_deg = Math::PI / 180
-    rm = 6371000
-
-    lat1_rad, lat2_rad = lat * rad_per_deg, self.lat * rad_per_deg
-    lon1_rad, lon2_rad = lon * rad_per_deg, self.lng * rad_per_deg
-
-    a = Math.sin((lat2_rad - lat1_rad) / 2) ** 2 + Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.sin((lon2_rad - lon1_rad) / 2) ** 2
-    c = 2 * Math::atan2(Math::sqrt(a), Math::sqrt(1 - a))
-
-    (rm * c).to_i
+  def distance_to_place(place)
+    Place.select("places.*, earth_distance(ll_to_earth(#{place.lat}, #{place.lng}), ll_to_earth(#{self.lat}, #{self.lng})) as distance").first.distance.to_i
   end
 
   def generate_auth_token

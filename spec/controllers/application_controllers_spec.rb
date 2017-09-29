@@ -19,4 +19,12 @@ RSpec.describe ApplicationController, type: :controller do
 
     it { expect { subject.send :authenticate }.to_not raise_error }
   end
+
+  describe '#current_user' do
+    let(:user) { stub_model User }
+
+    before {sign_in user}
+
+    its(:current_user) { should eq user }
+  end
 end

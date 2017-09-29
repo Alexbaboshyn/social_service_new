@@ -115,5 +115,17 @@ RSpec.describe UserDecorator do
     its(:coords) { should eq ({lat: 48.1, lng: 29.2}) }
   end
 
+  describe '#full_name' do
+    subject { user.decorate }
+
+    its(:full_name) { should eq 'John Silver' }
+  end
+
+  describe '#avatar_url' do
+    subject { user.decorate }
+
+    its(:avatar_url) { should eq ({original_url: "/avatars/original/missing.png", thumb_url: "/avatars/thumb/missing.png"}) }
+  end
+
 
 end

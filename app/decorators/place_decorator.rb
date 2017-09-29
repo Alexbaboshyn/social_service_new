@@ -48,7 +48,8 @@ class PlaceDecorator < ApplicationDecorator
   end
 
   def distance
-    h.current_user.distance_to_place(lat, lng)
+    # h.current_user.distance_to_place(lat, lng)
+    h.current_user.distance_to_place(model)
   end
 
   def ratings
