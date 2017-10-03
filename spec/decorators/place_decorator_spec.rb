@@ -93,11 +93,7 @@ RSpec.describe PlaceDecorator do
 
     let(:user) { stub_model User }
 
-    before do
-      expect(subject).to receive(:place_users) do
-        double.tap { |a| expect(a).to receive(:map).and_return(place_user) }
-      end
-    end
+    before { expect(subject).to receive(:place_users).and_return([place_user]) }
 
     before do
       expect(place_user).to receive(:user) do
@@ -105,6 +101,6 @@ RSpec.describe PlaceDecorator do
       end
     end
 
-    its(:ratings) { should eq ({user: user, rating: 5}) }
+    its(:ratings) { should eq ([{user: user, rating: 5}]) }
   end
 end
