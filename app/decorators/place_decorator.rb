@@ -4,39 +4,23 @@ class PlaceDecorator < ApplicationDecorator
   decorates_association :user
 
   private
-  # def _only
-  #   %I[id name place_id tags city overall_rating]
-  # end
-
   def _only
     if context[:short]
-      only = %I[id name city]
+      %i[id name city]
     else
-      only =  %I[id name place_id tags city overall_rating]
+      %i[id name place_id tags city overall_rating]
     end
-
-    only
   end
 
-  # def _methods
-  #   methods = %I[coords distance]
-  #
-  #   if context[:place]
-  #     methods << :"ratings"
-  #   end
-  #
-  #   methods
-  # end
 
   def _methods
     if context[:short]
-      methods = %I[distance]
+      %i[distance]
     elsif context[:place]
-      metods = %I[coords distance ratings]
+      %i[coords distance ratings]
     else
-      methods = %I[coords distance]
-    end
-    methods
+      %i[coords distance]
+    end  
   end
 
   def coords
@@ -48,7 +32,6 @@ class PlaceDecorator < ApplicationDecorator
   end
 
   def distance
-    # h.current_user.distance_to_place(lat, lng)
     h.current_user.distance_to_place(model)
   end
 

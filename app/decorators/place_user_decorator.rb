@@ -6,13 +6,13 @@ class PlaceUserDecorator < ApplicationDecorator
   private
   def _only
     if context[:user]
-      %I[rating]
+      %i[rating]
     else
       []
     end
   end
 
   def _methods
-    %I[place]
+    %i[place]
   end
 end

@@ -5,13 +5,17 @@ class EventDecorator < ApplicationDecorator
 
   decorates_association :place
 
+  ATTRS = %i[id kind title]
+  METHODS = %i[place date time author people_attended_count people_attended invited]
+
+
   private
   def _only
-    %I[id kind title]
+    ATTRS
   end
 
   def _methods
-    methods = %I[place date time author people_attended_count people_attended invited]
+    METHODS
   end
 
   def place

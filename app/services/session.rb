@@ -4,7 +4,7 @@ class Session
   attr_reader :email, :password
 
   def initialize params
-    params = params.try(:symbolize_keys) || {}
+    params = params.symbolize_keys || {}
 
     @user = params[:user]
 
