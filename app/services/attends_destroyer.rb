@@ -14,5 +14,6 @@ class AttendsDestroyer
   def delete
     event = current_user.own_events.find(event_id)
     event.users.delete(User.find(id))
+    
   end
 end
