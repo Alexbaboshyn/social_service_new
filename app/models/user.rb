@@ -10,9 +10,9 @@ class User < ApplicationRecord
 
   has_many :places, through: :place_users
 
-  enum gender: [:male, :female]
-
   has_many :auth_tokens, dependent: :destroy
+
+  enum gender: [:male, :female]
 
   has_attached_file :avatar, styles: { thumb: "300x300>" }
 
@@ -23,7 +23,7 @@ class User < ApplicationRecord
   after_create :generate_auth_token
 
   acts_as_geolocated lat: 'lat', lng: 'lng'
-  
+
 
   def distance_to_place(place)
     Place.select("places.*, earth_distance(ll_to_earth(#{place.lat}, #{place.lng}), ll_to_earth(#{self.lat}, #{self.lng})) as distance").first.distance.to_i

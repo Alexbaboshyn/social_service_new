@@ -7,13 +7,7 @@ class Event < ApplicationRecord
 
   enum kind: [:free, :by_invitation, :friends_only]
 
-  validates :kind, presence: true
-
-  validates :start_time, presence: true
-
-  validates :title, presence: true
-
-  validates :place_id, presence: true
+  validates :kind, :start_time, :title, :place_id,  presence: true
 
   validates :invites, presence: true, if: :kind_by_invitation?
 
@@ -34,7 +28,7 @@ class Event < ApplicationRecord
   end
 
   def build_invites
-    self.invites.each do |user_id|    
+    self.invites.each do |user_id|
       self.invited.find_or_create_by!(user_id: user_id)
     end
   end
