@@ -30,6 +30,8 @@ group :development, :test do
   gem 'rspec-activemodel-mocks'
   gem 'byebug', platform: :mri
   gem 'simplecov', require: false
+  gem 'faker'
+  gem 'factory_girl_rails'
 end
 
 group :development do
