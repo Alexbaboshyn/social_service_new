@@ -6,8 +6,7 @@ class Api::AttendsController < ApplicationController
   end
 
   def destroy
-    event = current_user.own_events.find(params[:event_id])
-    event.users.delete(User.find(params[:id]))
+    AttendsDestroyer.new(params.merge(current_user: current_user)).delete    
   end
 
   private

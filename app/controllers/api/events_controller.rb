@@ -16,11 +16,10 @@ class Api::EventsController < ApplicationController
 
   def collection
     if params[:place_id]
-      @events = Event.where(place_id: params[:place_id])
+      Event.where(place_id: params[:place_id])
     else
-      @events = EventSearcher.new(params.merge(user: current_user)).search
-    end
-    @events
+      EventSearcher.new(params.merge(user: current_user)).search
+    end  
   end
 
   def resource_params
@@ -29,7 +28,7 @@ class Api::EventsController < ApplicationController
                                   :start_time,
                                   :date,
                                   :title,
-                                  invites: []                                
+                                  invites: []
                                   )
   end
 end
