@@ -1,7 +1,16 @@
 class Api::PlacesController < ApplicationController
   private
   def resource
-    Place.find(params[:id])
+    place = Place.find_by(id: params[:id])
+
+    if place == nil
+      place = Place.find_by(city: params[:id])
+
+      if place == nil
+        place = PlaceBuilder.new(params[:id]).build
+      end
+    end
+    place
   end
 
   def collection
