@@ -1,17 +1,15 @@
 class PlaceBuilder
+  include PlaceCrawler
+
   def initialize params
     @city = params
   end
 
-  def data
-    @data ||= URI("https://restcountries.eu/rest/v2/capital/#{ @city }").read
-  end
-
   def place
-    JSON.parse(data, symbolize_names: true)
+    ApiPlaceDecorator.new(get_place).decorate
   end
 
-  def build
-    Place.create(ApiPlaceDecorator.new(place).decorate)
+  def build    
+    Place.create(place)
   end
 end
