@@ -1,15 +1,10 @@
 class Api::PlacesController < ApplicationController
   private
   def resource
-    place = Place.find_by(id: params[:id])
+    place = PlaceSearcher.new(params.merge(current_user: current_user)).search_by_id
 
-    if place == nil
-      place = Place.find_by(city: params[:id])
+    place = PlaceBuilder.new(params[:id]).build if place.empty?
 
-      if place == nil
-        place = PlaceBuilder.new(params[:id]).build
-      end
-    end
     place
   end
 
