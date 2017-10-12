@@ -7,4 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 users = FactoryGirl.create_list :user, 20
 
-places = FactoryGirl.create_list :place, places_numb 20
+places = FactoryGirl.create_list :place, 20

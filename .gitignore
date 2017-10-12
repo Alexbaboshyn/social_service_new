@@ -21,3 +21,7 @@ coverage
 exit
 
 (100, *point).order_by_distance(*point)
+.ruby-gemset
+Gemfile
+config/database.yml
+config/secrets.yml
