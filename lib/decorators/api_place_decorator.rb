@@ -1,4 +1,4 @@
-class ApiPlaceDecorator < ApplicationDecorator
+class ApiPlaceDecorator
   def initialize place
     @place = place
   end
