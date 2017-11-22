@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   attr_reader :current_user
 
-  rescue_from ActiveRecord::RecordNotFound do |exception|
+  rescue_from ActiveRecord::RecordNotFound, OpenURI::HTTPError do |exception|
     @exception = exception
 
     head 404
